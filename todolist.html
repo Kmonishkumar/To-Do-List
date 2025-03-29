@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super To-Do List</title>
+    <style>
+        /* Reset default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Body styling */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #9affd3, #ccc4fa);
+        }
+
+        /* Container for the to-do list */
+        .container {
+            background: #fff;
+            padding: 20px;
+            width: 350px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        /* Input and button container */
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #ff758c;
+            outline: none;
+            box-shadow: 0 0 8px rgba(255, 117, 140, 0.5);
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            background: #ff758c;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #e84362;
+        }
+
+        /* List styling */
+        ul {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        li {
+            background: #f8f9fa;
+            padding: 12px;
+            margin: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: 0.3s ease-in-out;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        li:hover {
+            background: #f1f3f5;
+            transform: scale(1.02);
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>📌To-Do List</h2>
+        <div class="input-group">
+            <input id="insert" type="text" placeholder="Enter a task...">
+            <button onclick="btn()">Add</button>
+        </div>
+        <ul id="list">
+        </ul>
+    </div>
+
+    <script>
+        var insert = document.getElementById("insert");
+        var list = document.getElementById("list");
+
+        function btn() {
+            if (insert.value.trim() === "") {
+                alert("Please enter a task!");
+                return;
+            }
+
+            var new_list = document.createElement("li");
+            new_list.innerHTML = insert.value + ' <button class="delete-btn" onclick="deleted(event)">Remove</button>';
+            list.appendChild(new_list);
+            insert.value = ""; // Clear input after adding
+        }
+
+        function deleted(event) {
+            event.target.parentElement.remove();
+        }
+    </script>
+</body>
+
+</html>
