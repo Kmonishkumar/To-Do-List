@@ -2,11 +2,10 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Super To-Do List</title>
     <style>
-        /* Reset default styles */
         * {
             margin: 0;
             padding: 0;
@@ -14,7 +13,6 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        /* Body styling */
         body {
             display: flex;
             justify-content: center;
@@ -23,7 +21,6 @@
             background: linear-gradient(135deg, #9affd3, #ccc4fa);
         }
 
-        /* Container for the to-do list */
         .container {
             background: #fff;
             padding: 20px;
@@ -38,13 +35,12 @@
             margin-bottom: 15px;
         }
 
-        /* Input and button container */
         .input-group {
             display: flex;
             gap: 10px;
         }
 
-        input {
+        input[type="text"] {
             flex: 1;
             padding: 10px;
             border: 2px solid #ccc;
@@ -53,7 +49,7 @@
             transition: 0.3s;
         }
 
-        input:focus {
+        input[type="text"]:focus {
             border-color: #ff758c;
             outline: none;
             box-shadow: 0 0 8px rgba(255, 117, 140, 0.5);
@@ -74,7 +70,6 @@
             background: #e84362;
         }
 
-        /* List styling */
         ul {
             list-style: none;
             margin-top: 20px;
@@ -85,17 +80,30 @@
             padding: 12px;
             margin: 8px 0;
             display: flex;
-            justify-content: space-between;
             align-items: center;
             border-radius: 5px;
             font-size: 16px;
             transition: 0.3s ease-in-out;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            justify-content: space-between;
         }
 
         li:hover {
             background: #f1f3f5;
             transform: scale(1.02);
+        }
+
+        .task-label {
+            flex: 1;
+            margin-left: 10px;
+            text-align: left;
+            transition: 0.3s;
+            font-size:large;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #888;
         }
 
         .delete-btn {
@@ -107,10 +115,19 @@
             cursor: pointer;
             border: none;
             transition: 0.3s;
+            margin-left: 10px;
         }
 
         .delete-btn:hover {
             background: #c0392b;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #4caf50;
+            transform: translateY(2px);
         }
     </style>
 </head>
@@ -119,11 +136,10 @@
     <div class="container">
         <h2>📌To-Do List</h2>
         <div class="input-group">
-            <input id="insert" type="text" placeholder="Enter a task...">
+            <input id="insert" type="text" placeholder="Enter a task..." />
             <button onclick="btn()">Add</button>
         </div>
-        <ul id="list">
-        </ul>
+        <ul id="list"></ul>
     </div>
 
     <script>
@@ -137,9 +153,24 @@
             }
 
             var new_list = document.createElement("li");
-            new_list.innerHTML = insert.value + ' <button class="delete-btn" onclick="deleted(event)">Remove</button>';
+
+            new_list.innerHTML = `
+        <input type="checkbox" onchange="toggleTask(this)">
+        <span class="task-label">${insert.value}</span>
+        <button class="delete-btn" onclick="deleted(event)">Remove</button>
+      `;
+
             list.appendChild(new_list);
-            insert.value = ""; // Clear input after adding
+            insert.value = "";
+        }
+
+        function toggleTask(checkbox) {
+            const label = checkbox.nextElementSibling;
+            if (checkbox.checked) {
+                label.classList.add("completed");
+            } else {
+                label.classList.remove("completed");
+            }
         }
 
         function deleted(event) {
